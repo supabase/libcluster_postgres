@@ -1,8 +1,8 @@
-# LibCluster Postgres Strategy
+# Libcluster Postgres Strategy
 
 Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used by Supabase on the [realtime](https://github.com/supabase/realtime) and [supavisor](https://github.com/supabase/supavisor) projects.
 
-It uses Postgres `LISTEN` and `NOTICATION` to send the information from a given node and connects them using LibCluster.
+It uses Postgres `LISTEN` and `NOTIFICATION` to send the information from a given node and connects them using libcluster.
 
 
 ```elixir
