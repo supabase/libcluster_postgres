@@ -4,6 +4,8 @@ Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used
 
 You can test it out by running `docker compose up`
 
+![example.png](example.png)
+
 ## Installation
 
 The package can be installed
