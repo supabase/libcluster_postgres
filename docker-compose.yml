@@ -1,10 +1,22 @@
 version: "3.8"
 
 services:
-  postgres:
+  db:
     image: postgres:latest
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
+  service1:
+    depends_on:
+      - db
+    build: .
+  service2:
+    depends_on:
+      - db
+    build: .
+  service3:
+    depends_on:
+      - db
+    build: .
