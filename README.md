@@ -1,6 +1,6 @@
 # Libcluster Postgres Strategy
 
-Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used by Supabase on the [realtime](https://github.com/supabase/realtime) and [supavisor](https://github.com/supabase/supavisor) projects.
+Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used by Supabase on the [realtime](https://github.com/supabase/realtime), [supavisor](https://github.com/supabase/supavisor) and [logflare](https://github.com/logflare/logflare) projects.
 
 You can test it out by running `docker compose up`
 
@@ -59,3 +59,7 @@ defmodule MyApp do
   end
 end
 ```
+
+
+## Acknowledgements
+A special thank you to [@gotbones](https://twitter.com/gotbones) for creating libcluster and [@kevinbuch_](https://twitter.com/kevinbuch_) for the original inspiration for this strategy.
