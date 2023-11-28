@@ -24,6 +24,8 @@ defmodule LibclusterPostgres.Strategy do
           {:ok, %{:config => list(), :meta => map(), optional(any()) => any()},
            {:continue, :connect}}
   def init([state]) do
+    channel_name = Keyword.get(state.config, :channel_name, clean_cookie(Node.get_cookie()))
+
     opts = [
       hostname: Keyword.fetch!(state.config, :hostname),
       username: Keyword.fetch!(state.config, :username),
@@ -31,11 +33,12 @@ defmodule LibclusterPostgres.Strategy do
       database: Keyword.fetch!(state.config, :database),
       port: Keyword.fetch!(state.config, :port),
       parameters: Keyword.fetch!(state.config, :parameters),
-      channel_name: Keyword.fetch!(state.config, :channel_name)
+      channel_name: channel_name
     ]
 
     config =
       state.config
+      |> Keyword.put_new(:channel_name, channel_name)
       |> Keyword.put_new(:heartbeat_interval, 5_000)
       |> Keyword.delete(:url)
 
@@ -102,5 +105,12 @@ defmodule LibclusterPostgres.Strategy do
   @spec heartbeat(non_neg_integer()) :: reference()
   defp heartbeat(interval) when interval >= 0 do
     Process.send_after(self(), :heartbeat, interval)
+  end
+
+  # Replaces all non alphanumeric values into underescore
+  defp clean_cookie(cookie) when is_atom(cookie), do: cookie |> Atom.to_string() |> clean_cookie()
+
+  defp clean_cookie(str) when is_binary(str) do
+    String.replace(str, ~r/\W/, "_")
   end
 end
