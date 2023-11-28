@@ -4,7 +4,6 @@ Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used
 
 It uses Postgres `LISTEN` and `NOTIFICATION` to send the information from a given node and connects them using libcluster.
 
-
 ```elixir
 config :libcluster,
   topologies: [
@@ -17,6 +16,7 @@ config :libcluster,
           database: "postgres",
           port: 5432,
           parameters: [],
+          # optional, defaults to node cookie
           channel_name: "cluster"
       ],
     ]
@@ -24,7 +24,6 @@ config :libcluster,
 ```
 
 To see it in use run the script `./test.sh` in this folder and you will see that both nodes connected as expected and are able to list one another.
-
 
 ## Installation
 

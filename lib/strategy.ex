@@ -11,7 +11,7 @@ defmodule LibclusterPostgres.Strategy do
   ## Options
 
   * `heartbeat_interval` - The interval at which to send heartbeat messages in milliseconds (optional; default: 5_000)
-  * `channel_name` - The name of the channel to which nodes will listen and notify (optional; default: "cluster")
+  * `channel_name` - The name of the channel to which nodes will listen and notify (optional; defaults to the result of `Node.get_cookie/0`)
   """
   use GenServer
 
