@@ -1,4 +1,4 @@
-defmodule Cluster.Strategy.Postgres do
+defmodule LibclusterPostgres.Strategy do
   @moduledoc """
   A libcluster strategy that uses Postgres LISTEN/NOTIFY to determine the cluster topology.
 
