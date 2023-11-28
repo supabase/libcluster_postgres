@@ -1,7 +1,7 @@
 import Config
 
 config :logger, :console,
-  format: "[$level[node:$node] $message\n", metadata: [:node]
+  format: "[$level][node:$node] $message\n", metadata: [:node]
 
 config :libcluster, topologies: [
   postgres: [

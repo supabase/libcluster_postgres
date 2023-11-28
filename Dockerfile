@@ -13,5 +13,5 @@ WORKDIR /app
 RUN mix compile
 
 WORKDIR /app/example
-RUN mix release
-CMD [ "_build/prod/rel/example/bin/example", "start", "--sname", "service", "--no-halt" ]
+RUN mix deps.get && mix compile
+CMD [ "elixir", "--sname", "service", "--cookie", "secret", "-S", "mix", "run", "--no-halt" ]
