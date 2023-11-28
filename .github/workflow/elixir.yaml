@@ -1,10 +1,8 @@
 name: Elixir CI
 
 on:
-  push:
-    branches: ["main"] # adapt branch for project
   pull_request:
-    branches: ["main"] # adapt branch for project
+    branches: ["main"]
 
 env:
   MIX_ENV: test
