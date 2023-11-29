@@ -1,4 +1,4 @@
-defmodule Cluster.Strategy.PostgresTest do
+defmodule LibclusterPostgres.StrategyTest do
   use ExUnit.Case
 
   alias Postgrex.Notifications
@@ -17,7 +17,7 @@ defmodule Cluster.Strategy.PostgresTest do
     verify_conn_notification = start_supervised!({Notifications, @config})
     Notifications.listen(verify_conn_notification, @config[:channel_name])
 
-    topologies = [postgres: [strategy: Cluster.Strategy.Postgres, config: @config]]
+    topologies = [postgres: [strategy: LibclusterPostgres.Strategy, config: @config]]
     start_supervised!({Cluster.Supervisor, [topologies]})
 
     channel_name = @config[:channel_name]
