@@ -37,11 +37,13 @@ config :libcluster,
           database: "postgres",
           port: 5432,
           parameters: [],
+          # optional, defaults to node cookie
           channel_name: "cluster"
       ],
     ]
   ]
 ```
+
 Then add it to your supervision tree:
 
 ```elixir
@@ -60,6 +62,6 @@ defmodule MyApp do
 end
 ```
 
-
 ## Acknowledgements
-A special thank you to [@gotbones](https://twitter.com/gotbones) for creating libcluster and [@kevinbuch_](https://twitter.com/kevinbuch_) for the original inspiration for this strategy.
+
+A special thank you to [@gotbones](https://twitter.com/gotbones) for creating libcluster and [@kevinbuch\_](https://twitter.com/kevinbuch_) for the original inspiration for this strategy.

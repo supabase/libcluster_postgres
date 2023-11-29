@@ -11,6 +11,7 @@ defmodule LibclusterPostgres.MixProject do
       deps: deps(),
       package: package(),
       docs: docs(),
+      aliases: aliases(),
       source_url: "https://github.com/supabase/libcluster_postgres",
       elixirc_paths: elixirc_paths(Mix.env()),
       description: "Postgres strategy for libcluster"
@@ -49,4 +50,10 @@ defmodule LibclusterPostgres.MixProject do
 
   defp elixirc_paths(:test), do: ["lib", "test", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  defp aliases() do
+    [
+      test: ["cmd epmd -daemon", "test"]
+    ]
+  end
 end
