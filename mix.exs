@@ -27,7 +27,8 @@ defmodule LibclusterPostgres.MixProject do
   defp deps do
     [
       {:libcluster, "~> 3.3"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 
