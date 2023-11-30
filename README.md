@@ -65,8 +65,9 @@ end
 
 At Supabase, we use clustering in all of our Elixir projects which include [Logflare](https://github.com/Logflare/logflare), [Supavisor](https://github.com/supabase/supavisor) and [Realtime](https://github.com/supabase/realtime). With multiple servers connected we can load shed, create globally distributed services and provide the best service to our customers so we’re closer to them geographically and to their instances, reducing overall latency.
 
-Example of Realtime architecture where a customer from CA will connect to the server closest to them and their Supabase instance
+![Example of Realtime architecture where a customer from CA will connect to the server closest to them and their Supabase instance](realtime_example.png)
 
+Example of Realtime architecture where a customer from CA will connect to the server closest to them and their Supabase instance
 To achieve a connected cluster, we wanted to be as cloud-agnostic as possible. This makes our self-hosting options more accessible. We don’t want to introduce extra services to solve this single issue - Postgres is the logical way to achieve it.
 
 The other piece of the puzzle was already built by the Erlang community being the defacto library to facilitate the creation of connected Elixir servers: [libcluster](https://github.com/bitwalker/libcluster).
