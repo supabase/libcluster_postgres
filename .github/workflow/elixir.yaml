@@ -1,9 +1,10 @@
 name: Elixir CI
 
 on:
+  push:
+    branches: ["main"]
   pull_request:
     branches: ["main"]
-
 env:
   MIX_ENV: test
 
@@ -32,84 +33,18 @@ jobs:
         otp: ["25.0.4"] # Define the OTP version [required]
         elixir: ["1.14.1"] # Define the elixir version [required]
     steps:
-      # Step: Setup Elixir + Erlang image as the base.
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
-      # Cache key based on Erlang/Elixir version and the mix.lock hash
-      - name: Restore PLT cache
-        id: plt_cache
-        uses: actions/cache/restore@v3
-        with:
-          key: |
-            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
-          path: |
-            priv/plts
-
-      # By default, the GitHub Cache action will only save the cache if all steps in the job succeed,
-      # so we separate the cache restore and save steps in case running dialyzer fails.
-      - name: Save PLT cache
-        id: plt_cache_save
-        uses: actions/cache/save@v3
-        if: steps.plt_cache.outputs.cache-hit != 'true'
-        with:
-          key: |
-            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
-          path: |
-            priv/plts
-        # Step: Check out the code.
       - name: Checkout code
         uses: actions/checkout@v3
-
-      # Step: Define how to cache deps. Restores existing cache if present.
-      - name: Cache deps
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-elixir-deps
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-
-
-      # Step: Define how to cache the `_build` directory. After the first run,
-      # this speeds up tests runs a lot. This includes not re-compiling our
-      # project's downloaded deps every run.
-      - name: Cache compiled build
-        id: cache-build
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-compiled-build
-        with:
-          path: _build
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-
-            ${{ runner.os }}-mix-
-
-      # Step: Download project dependencies. If unchanged, uses
-      # the cached version.
       - name: Install dependencies
         run: mix deps.get
-
-      # Step: Compile the project treating any warnings as errors.
       - name: Compiles without warnings
         run: mix compile --warnings-as-errors
-
-      # Create PLTs if no cache was found
-      - name: Create PLTs
-        if: steps.plt_cache.outputs.cache-hit != 'true'
-        run: mix dialyzer --plt
-
-      # Step: Check that the checked in code has already been formatted.
       - name: Check Formatting
         run: mix format --check-formatted
-
-      # Step: Execute the tests.
       - name: Run tests
         run: mix test
