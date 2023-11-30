@@ -140,7 +140,7 @@ def handle_continue(:connect, state) do
   end
 ```
 
-1. We actively listen for new `{:notification, pid, reference, channel, payload}` messages and connect to the node received in the payload
+2. We actively listen for new `{:notification, pid, reference, channel, payload}` messages and connect to the node received in the payload
 
 ```elixir
 # lib/cluster/strategy/postgres.ex:80
@@ -161,7 +161,7 @@ def handle_info({:notification, _, _, _, node}, state) do
   end
 ```
 
-1. Finally, we configure a heartbeat that is similar to the first message sent for cluster formation so libcluster is capable of heal if need be
+3. Finally, we configure a heartbeat that is similar to the first message sent for cluster formation so libcluster is capable of heal if need be
 
 ```elixir
 # lib/cluster/strategy/postgres.ex:73
