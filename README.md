@@ -8,7 +8,7 @@ Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used
 
 You can test it out by running `docker compose up`
 
-![example.png](example.png)
+![example.png](https://github.com/supabase/libcluster_postgres/blob/main/example.png?raw=true)
 
 ## Installation
 
@@ -29,7 +29,7 @@ To use it, set your configuration file with the informations for your database:
 config :libcluster,
   topologies: [
     example: [
-      strategy: Cluster.Strategy.Postgres,
+      strategy: LibclusterPostgres.Strategy,
       config: [
           hostname: "localhost",
           username: "postgres",
@@ -65,7 +65,7 @@ end
 
 At Supabase, we use clustering in all of our Elixir projects which include [Logflare](https://github.com/Logflare/logflare), [Supavisor](https://github.com/supabase/supavisor) and [Realtime](https://github.com/supabase/realtime). With multiple servers connected we can load shed, create globally distributed services and provide the best service to our customers so we’re closer to them geographically and to their instances, reducing overall latency.
 
-![Example of Realtime architecture where a customer from CA will connect to the server closest to them and their Supabase instance](realtime_example.png)
+![Example of Realtime architecture where a customer from CA will connect to the server closest to them and their Supabase instance](https://github.com/supabase/libcluster_postgres/blob/main/realtime_example.png?raw=true)
 
 Example of Realtime architecture where a customer from CA will connect to the server closest to them and their Supabase instance
 To achieve a connected cluster, we wanted to be as cloud-agnostic as possible. This makes our self-hosting options more accessible. We don’t want to introduce extra services to solve this single issue - Postgres is the logical way to achieve it.

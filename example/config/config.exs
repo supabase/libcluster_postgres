@@ -5,7 +5,7 @@ config :logger, :console,
 
 config :libcluster, topologies: [
   postgres: [
-    strategy: Cluster.Strategy.Postgres,
+    strategy: LibclusterPostgres.Strategy,
     config: [
       hostname: "db",
       username: "postgres",
