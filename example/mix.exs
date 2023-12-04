@@ -23,7 +23,7 @@ defmodule Example.MixProject do
   defp deps do
     [
       {:libcluster, "~> 3.3"},
-      {:libcluster_postgres, path: "../"}
+      {:libcluster_postgres, "~> 0.1.0"}
     ]
   end
 end
