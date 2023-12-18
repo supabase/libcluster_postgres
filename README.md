@@ -37,6 +37,10 @@ config :libcluster,
           database: "postgres",
           port: 5432,
           parameters: [],
+          # optional, defaults to false
+          ssl: true,
+          # optional, please refer to the Postgrex docs
+          ssl_opts: nil,
           # optional, defaults to node cookie
           channel_name: "cluster"
       ],
