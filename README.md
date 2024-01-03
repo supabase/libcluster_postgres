@@ -3,6 +3,7 @@
 [![Hex version badge](https://img.shields.io/hexpm/v/libcluster_postgres.svg)](https://hex.pm/packages/libcluster_postgres)
 [![License badge](https://img.shields.io/hexpm/l/libcluster_postgres.svg)](https://github.com/supabase/libcluster_postgres/blob/main/LICENSE)
 [![Elixir CI](https://github.com/supabase/libcluster_postgres/actions/workflows/elixir.yaml/badge.svg)](https://github.com/supabase/libcluster_postgres/actions/workflows/elixir.yaml)
+[![ElixirForum](https://img.shields.io/badge/Elixir_Forum-grey)](https://elixirforum.com/t/libcluster-postgres-clustering-strategy-for-libcluster/60053)
 
 Postgres Strategy for [libcluster](https://hexdocs.pm/libcluster/) which is used by Supabase on the [realtime](https://github.com/supabase/realtime), [supavisor](https://github.com/supabase/supavisor) and [logflare](https://github.com/logflare/logflare) projects.
 
