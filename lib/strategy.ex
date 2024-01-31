@@ -34,6 +34,7 @@ defmodule LibclusterPostgres.Strategy do
       port: Keyword.fetch!(state.config, :port),
       ssl: Keyword.get(state.config, :ssl),
       ssl_opts: Keyword.get(state.config, :ssl_opts),
+      socket_options: Keyword.get(state.config, :socket_options, []),
       parameters: Keyword.fetch!(state.config, :parameters),
       channel_name: channel_name
     ]
