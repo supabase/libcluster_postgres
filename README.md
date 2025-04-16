@@ -18,7 +18,9 @@ by adding `libcluster_postgres` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:libcluster_postgres, "~> 0.1"}]
+  [
+    {:libcluster_postgres, "~> 0.1"}
+  ]
 end
 ```
 
@@ -45,6 +47,7 @@ config :libcluster,
           # optional, please refer to the Postgrex docs
           socket_options: nil,
           # optional, defaults to node cookie
+          # must be a valid postgres identifier (alphanumeric and underscores only) with valid length
           channel_name: "cluster"
       ],
     ]
