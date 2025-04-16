@@ -42,6 +42,8 @@ config :libcluster,
           ssl: true,
           # optional, please refer to the Postgrex docs
           ssl_opts: nil,
+          # optional, please refer to the Postgrex docs
+          socket_options: nil,
           # optional, defaults to node cookie
           channel_name: "cluster"
       ],
