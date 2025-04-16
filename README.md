@@ -48,7 +48,9 @@ config :libcluster,
           socket_options: nil,
           # optional, defaults to node cookie
           # must be a valid postgres identifier (alphanumeric and underscores only) with valid length
-          channel_name: "cluster"
+          channel_name: "cluster",
+          # optional, heartbeat interval in ms. defaults to 5s
+          heartbeat_interval: 10_000
       ],
     ]
   ]
