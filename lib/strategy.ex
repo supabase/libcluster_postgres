@@ -26,9 +26,11 @@ defmodule LibclusterPostgres.Strategy do
   def init([state]) do
     channel_name = Keyword.get(state.config, :channel_name, clean_cookie(Node.get_cookie()))
 
-    ssl = if ssl_value = Keyword.get(state.config, :ssl) do
-      Keyword.get(state.config, :ssl_opts) || ssl_value
-    end
+    ssl =
+      if ssl_value = Keyword.get(state.config, :ssl) do
+        Keyword.get(state.config, :ssl_opts) || ssl_value
+      end
+
     opts = [
       hostname: Keyword.fetch!(state.config, :hostname),
       username: Keyword.fetch!(state.config, :username),
