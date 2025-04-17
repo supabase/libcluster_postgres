@@ -41,10 +41,9 @@ config :libcluster,
           port: 5432,
           # optional, connection parameters. Defaults to []
           parameters: [],
-          # optional, defaults to false
+          # optional, defaults to false. Refer to Postgrex docs
+          # as of v0.18 postgrex, accepts `true` or a keyword list of options
           ssl: true,
-          # optional, please refer to the Postgrex docs
-          ssl_opts: nil,
           # optional, please refer to the Postgrex docs
           socket_options: nil,
           # optional, defaults to node cookie
@@ -52,6 +51,8 @@ config :libcluster,
           channel_name: "cluster",
           # optional, heartbeat interval in ms. defaults to 5s
           heartbeat_interval: 10_000
+          # optional, auto-reconnect to notifications, defaults to true
+          auto_reconnect: false
       ],
     ]
   ]
