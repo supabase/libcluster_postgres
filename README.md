@@ -42,6 +42,7 @@ config :libcluster,
           # optional, connection parameters. Defaults to []
           parameters: [],
           # optional, defaults to false. Refer to Postgrex docs
+          # as of v0.18 postgrex, accepts `true` or a keyword list of options
           ssl: true,
           # optional, please refer to the Postgrex docs
           socket_options: nil,
