@@ -1,4 +1,4 @@
-# libcluster Postgres Strategy
+# Libcluster Postgres Strategy
 
 [![Hex version badge](https://img.shields.io/hexpm/v/libcluster_postgres.svg)](https://hex.pm/packages/libcluster_postgres)
 [![License badge](https://img.shields.io/hexpm/l/libcluster_postgres.svg)](https://github.com/supabase/libcluster_postgres/blob/main/LICENSE)
@@ -18,7 +18,9 @@ by adding `libcluster_postgres` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:libcluster_postgres, "~> 0.1"}]
+  [
+    {:libcluster_postgres, "~> 0.1"}
+  ]
 end
 ```
 
@@ -37,6 +39,7 @@ config :libcluster,
           password: "postgres",
           database: "postgres",
           port: 5432,
+          # optional, connection parameters. Defaults to []
           parameters: [],
           # optional, defaults to false
           ssl: true,
@@ -45,7 +48,10 @@ config :libcluster,
           # optional, please refer to the Postgrex docs
           socket_options: nil,
           # optional, defaults to node cookie
-          channel_name: "cluster"
+          # must be a valid postgres identifier (alphanumeric and underscores only) with valid length
+          channel_name: "cluster",
+          # optional, heartbeat interval in ms. defaults to 5s
+          heartbeat_interval: 10_000
       ],
     ]
   ]
