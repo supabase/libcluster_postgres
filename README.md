@@ -1,4 +1,4 @@
-# libcluster Postgres Strategy
+# Libcluster Postgres Strategy
 
 [![Hex version badge](https://img.shields.io/hexpm/v/libcluster_postgres.svg)](https://hex.pm/packages/libcluster_postgres)
 [![License badge](https://img.shields.io/hexpm/l/libcluster_postgres.svg)](https://github.com/supabase/libcluster_postgres/blob/main/LICENSE)
@@ -39,6 +39,7 @@ config :libcluster,
           password: "postgres",
           database: "postgres",
           port: 5432,
+          # optional, connection parameters. Defaults to []
           parameters: [],
           # optional, defaults to false
           ssl: true,
