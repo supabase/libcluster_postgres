@@ -26,17 +26,20 @@ defmodule LibclusterPostgres.Strategy do
   def init([state]) do
     channel_name = Keyword.get(state.config, :channel_name, clean_cookie(Node.get_cookie()))
 
+    ssl = if ssl_value = Keyword.get(state.config, :ssl) do
+      Keyword.get(state.config, :ssl_opts) || ssl_value
+    end
     opts = [
       hostname: Keyword.fetch!(state.config, :hostname),
       username: Keyword.fetch!(state.config, :username),
       password: Keyword.fetch!(state.config, :password),
       database: Keyword.fetch!(state.config, :database),
       port: Keyword.fetch!(state.config, :port),
-      ssl: Keyword.get(state.config, :ssl),
-      ssl_opts: Keyword.get(state.config, :ssl_opts),
+      ssl: ssl,
       socket_options: Keyword.get(state.config, :socket_options, []),
       parameters: Keyword.get(state.config, :parameters, []),
-      channel_name: channel_name
+      channel_name: channel_name,
+      auto_reconnect: Keyword.get(state.config, :auto_reconnect, true)
     ]
 
     config =
