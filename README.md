@@ -60,7 +60,7 @@ config :libcluster,
 Then add it to your supervision tree:
 
 ```elixir
-defmodule MyApp do
+defmodule MyApp.Application do
   use Application
 
   def start(_type, _args) do
@@ -74,6 +74,31 @@ defmodule MyApp do
   end
 end
 ```
+
+If you are using Ecto, you may want to reuse your existing repo
+configuration. For example:
+
+```elixir
+defmodule MyApp.Application do
+  use Application
+
+  def start(_type, _args) do    
+    topology = [
+      strategy: LibclusterPostgres.Strategy,
+      config: MyApp.Repo.config()
+    ]
+
+    children = [
+      # ...
+      {Cluster.Supervisor, [[app: topology]]},
+      # ...
+    ]
+
+    Supervisor.start_link(children, strategy: :one_for_one)
+  end
+end
+```
+
 ### Why do we need a distributed Erlang Cluster?
 
 At Supabase, we use clustering in all of our Elixir projects which include [Logflare](https://github.com/Logflare/logflare), [Supavisor](https://github.com/supabase/supavisor) and [Realtime](https://github.com/supabase/realtime). With multiple servers connected we can load shed, create globally distributed services and provide the best service to our customers so we’re closer to them geographically and to their instances, reducing overall latency.
