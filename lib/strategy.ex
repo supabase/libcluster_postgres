@@ -31,7 +31,7 @@ defmodule LibclusterPostgres.Strategy do
       username: Keyword.fetch!(state.config, :username),
       password: Keyword.fetch!(state.config, :password),
       database: Keyword.fetch!(state.config, :database),
-      port: Keyword.fetch!(state.config, :port),
+      port: Keyword.get(state.config, :port, 5432),
       ssl: Keyword.get(state.config, :ssl),
       ssl_opts: Keyword.get(state.config, :ssl_opts),
       socket_options: Keyword.get(state.config, :socket_options, []),
