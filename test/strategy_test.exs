@@ -26,6 +26,20 @@ defmodule LibclusterPostgres.StrategyTest do
     assert_receive {:notification, _, _, ^channel_name, ^node}, 1000
   end
 
+  @quoted_config Keyword.put(@config, :channel_name, "123_oops")
+  test "sends psql notification with cluster information to a channel that requires quoting" do
+    verify_conn_notification = start_supervised!({Notifications, @quoted_config})
+    Notifications.listen(verify_conn_notification, @quoted_config[:channel_name])
+
+    topologies = [postgres: [strategy: LibclusterPostgres.Strategy, config: @quoted_config]]
+    start_supervised!({Cluster.Supervisor, [topologies]})
+
+    channel_name = @quoted_config[:channel_name]
+    node = "#{node()}"
+
+    assert_receive {:notification, _, _, ^channel_name, ^node}, 1000
+  end
+
   describe "connect via cookie" do
     @cookie_config Keyword.put(@config, :channel_name, "my_random__123_long_cookie")
     @cookie :"my-random-#123-long-cookie"

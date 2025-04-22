@@ -78,7 +78,7 @@ defmodule LibclusterPostgres.Strategy do
 
   def handle_info(:heartbeat, state) do
     Process.cancel_timer(state.meta.heartbeat_ref)
-    Postgrex.query(state.meta.conn, "NOTIFY #{state.config[:channel_name]}, '#{node()}'", [])
+    Postgrex.query(state.meta.conn, "NOTIFY \"#{state.config[:channel_name]}\", '#{node()}'", [])
     ref = heartbeat(state.config[:heartbeat_interval])
     {:noreply, put_in(state.meta.heartbeat_ref, ref)}
   end
