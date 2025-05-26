@@ -18,10 +18,31 @@ defmodule LibclusterPostgres.Strategy do
   alias Cluster.Strategy
   alias Cluster.Logger
 
+  @type config :: [
+          hostname: String.t(),
+          username: String.t(),
+          password: String.t(),
+          database: String.t(),
+          port: non_neg_integer(),
+          parameters: keyword(),
+          ssl: boolean(),
+          ssl_opts: keyword() | nil,
+          socket_options: keyword() | nil,
+          channel_name: String.t(),
+          heartbeat_interval: non_neg_integer()
+        ]
+
+  @type meta :: %{
+          opts: fun(),
+          conn: Postgrex.conn() | nil,
+          conn_notif: pid() | nil,
+          heartbeat_ref: reference()
+        }
+
   def start_link(args), do: GenServer.start_link(__MODULE__, args)
 
-  @spec init([%{:config => any(), :meta => any(), optional(any()) => any()}, ...]) ::
-          {:ok, %{:config => list(), :meta => map(), optional(any()) => any()},
+  @spec init([%{:config => config(), :meta => any(), optional(any()) => any()}, ...]) ::
+          {:ok, %{:config => config(), :meta => meta(), optional(any()) => any()},
            {:continue, :connect}}
   def init([state]) do
     channel_name = Keyword.get(state.config, :channel_name, clean_cookie(Node.get_cookie()))
@@ -36,14 +57,16 @@ defmodule LibclusterPostgres.Strategy do
       ssl_opts: Keyword.get(state.config, :ssl_opts),
       socket_options: Keyword.get(state.config, :socket_options, []),
       parameters: Keyword.get(state.config, :parameters, []),
-      channel_name: channel_name
+      channel_name: channel_name,
+      auto_reconnect: true,
+      reconnect_backoff: :timer.seconds(5)
     ]
 
     config =
       state.config
       |> Keyword.put_new(:channel_name, channel_name)
-      |> Keyword.put_new(:heartbeat_interval, 5_000)
-      |> Keyword.delete(:url)
+      |> Keyword.put_new(:heartbeat_interval, :timer.seconds(5))
+      |> Keyword.delete(:password)
 
     meta = %{
       opts: fn -> opts end,
@@ -56,8 +79,10 @@ defmodule LibclusterPostgres.Strategy do
   end
 
   def handle_continue(:connect, state) do
-    with {:ok, conn} <- Postgrex.start_link(state.meta.opts.()),
-         {:ok, conn_notif} <- Postgrex.Notifications.start_link(state.meta.opts.()),
+    opts = state.meta.opts.()
+
+    with {:ok, conn} <- Postgrex.start_link(opts),
+         {:ok, conn_notif} <- Postgrex.Notifications.start_link(opts),
          {_, _} <- Postgrex.Notifications.listen(conn_notif, state.config[:channel_name]) do
       Logger.info(state.topology, "Connected to Postgres database")
 
