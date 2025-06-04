@@ -10,7 +10,7 @@ RUN mix local.hex --force && mix local.rebar --force
 ADD ../../ /app
 
 WORKDIR /app
-RUN mix compile
+RUN mix deps.get && mix compile
 
 WORKDIR /app/example
 RUN mix deps.get && mix compile
