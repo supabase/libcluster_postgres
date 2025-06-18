@@ -19,7 +19,7 @@ defmodule LibclusterPostgres.Strategy do
   alias Cluster.Logger
 
   @postgrex_keys [:hostname, :username, :password, :database, :port] ++
-                   [:ssl, :ssl_opts, :socket_options, :parameters]
+                   [:ssl, :ssl_opts, :socket, :socket_dir, :socket_options, :parameters]
 
   def start_link(args), do: GenServer.start_link(__MODULE__, args)
 
