@@ -8,8 +8,6 @@ defmodule LibclusterPostgres.StrategyTest do
     username: "postgres",
     password: "postgres",
     database: "postgres",
-    port: 5432,
-    parameters: [],
     channel_name: "cluster"
   ]
 

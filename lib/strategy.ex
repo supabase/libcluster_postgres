@@ -18,6 +18,9 @@ defmodule LibclusterPostgres.Strategy do
   alias Cluster.Strategy
   alias Cluster.Logger
 
+  @postgrex_keys [:hostname, :username, :password, :database, :port] ++
+                   [:ssl, :ssl_opts, :socket, :socket_dir, :socket_options, :parameters]
+
   def start_link(args), do: GenServer.start_link(__MODULE__, args)
 
   @spec init([%{:config => any(), :meta => any(), optional(any()) => any()}, ...]) ::
@@ -26,18 +29,9 @@ defmodule LibclusterPostgres.Strategy do
   def init([state]) do
     channel_name = Keyword.get(state.config, :channel_name, clean_cookie(Node.get_cookie()))
 
-    opts = [
-      hostname: Keyword.fetch!(state.config, :hostname),
-      username: Keyword.fetch!(state.config, :username),
-      password: Keyword.fetch!(state.config, :password),
-      database: Keyword.fetch!(state.config, :database),
-      port: Keyword.fetch!(state.config, :port),
-      ssl: Keyword.get(state.config, :ssl),
-      ssl_opts: Keyword.get(state.config, :ssl_opts),
-      socket_options: Keyword.get(state.config, :socket_options, []),
-      parameters: Keyword.get(state.config, :parameters, []),
-      channel_name: channel_name
-    ]
+    opts =
+      [channel_name: channel_name] ++
+        Keyword.take(state.config, @postgrex_keys)
 
     config =
       state.config
