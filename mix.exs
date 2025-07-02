@@ -5,7 +5,7 @@ defmodule LibclusterPostgres.MixProject do
     [
       name: "libcluster_postgres",
       app: :libcluster_postgres,
-      version: "0.1.3",
+      version: "0.2.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),

@@ -19,7 +19,7 @@ by adding `libcluster_postgres` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:libcluster_postgres, "~> 0.1"}
+    {:libcluster_postgres, "~> 0.2"}
   ]
 end
 ```
